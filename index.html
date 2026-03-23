@@ -75,6 +75,7 @@
         .drop-zone{display:flex;flex-wrap:wrap;gap:15px;justify-content:center;min-height:90px;border:2px dashed rgba(255,255,255,.2);border-radius:24px;padding:20px;margin-bottom:20px;transition: all 0.3s;}
         .slot{min-width:130px;height:65px;border:2px dashed rgba(255,255,255,.2);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:900;background:rgba(255,255,255,.03);cursor:pointer;position:relative;transition: all 0.3s;}
         .slot.filled{border:2px solid var(--blue);background:rgba(102,126,234,.15);animation:popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+        .slot.wrong{border:2px solid var(--pink) !important;background:rgba(245,87,108,.15) !important;animation:shake 0.5s ease-in-out;}
         .slot-num{position:absolute;top:-10px;left:-10px;width:24px;height:24px;background:var(--blue);border-radius:50%;font-size:0.7rem;display:flex;align-items:center;justify-content:center;}
 
         /* 單詞池 */
@@ -198,75 +199,75 @@ const DATA = [
     {words:["企鵝","住在","冰天雪地","的南極"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"這種鳥住在哪裡？"},
     {words:["袋鼠","的肚子裡","有一個","小袋鼠"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"跳跳澳洲動物的特徵？"},
     {words:["烏龜","爬行","的速度","非常緩慢"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"牠走得快嗎？"},
-    {words:["長頸鹿","有","一條","長長的脖子"], cat:"animal", label:"🐾 動物", diff:"簡單", hint:"牠最高的特徵？"},
+    {words:["長頸鹿","有","一條","長長的","脖子"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"牠最高的特徵？"},
     {words:["大象","用","長鼻子","吸水洗澡"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"象如何洗澡？"},
-    {words:["蜜蜂","忙著","在花間","採集花粉"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"小昆蟲在工作？"},
-    {words:["青蛙","在","荷葉上","捕捉害蟲"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"田園小英雄在做什麼？"},
+    {words:["蜜蜂","忙著","在花間","採集","花粉"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"小昆蟲在工作？"},
+    {words:["青蛙","在","荷葉上","捕捉","害蟲"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"田園小英雄在做什麼？"},
     {words:["兔子","最喜歡","吃","蘿蔔"], cat:"animal", label:"🐾 動物", diff:"簡單", hint:"長耳朵吃什麼？"},
-    {words:["孔雀","展開","了","美麗的羽毛"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"最漂亮的開屏？"},
+    {words:["孔雀","展開","了","美麗的","羽毛"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"最漂亮的開屏？"},
     {words:["猴子","在","樹林裡","盪來盪去"], cat:"animal", label:"🐾 動物", diff:"簡單", hint:"靈活的動物在森林？"},
     {words:["老鷹","在","高空中","盤旋"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"天空霸主在做什麼？"},
     {words:["螃蟹","在","沙灘上","橫著走路"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"海邊生物走路方式？"},
-    {words:["貓頭鷹","在","黑夜裡","捕捉獵物"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"晚上不睡覺的鳥？"},
-    {words:["松鼠","在","樹洞裡","儲存橡果"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"小動物如何過冬？"},
-    {words:["蠶寶寶","喜歡","吃","新鮮的桑葉"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"牠長大會變蛾？"},
+    {words:["貓頭鷹","在","黑夜裡","捕捉","獵物"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"晚上不睡覺的鳥？"},
+    {words:["松鼠","在","樹洞裡","儲存","橡果"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"小動物如何過冬？"},
+    {words:["蠶寶寶","喜歡","吃","新鮮的","桑葉"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"牠長大會變蛾？"},
 
     // 家庭 (20)
     {words:["媽媽","煮了","豐富的","晚餐"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"誰在廚房忙碌？"},
     {words:["爸爸","正在","書房","辛勤工作"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"爸爸在做什麼？"},
-    {words:["爺爺","在","公園","練習太極"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"長輩在運動？"},
+    {words:["爺爺","在","公園","練習","太極"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"挑戰", hint:"長輩在運動？"},
     {words:["奶奶","為我","織了","一件毛衣"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"溫暖的衣服是誰做的？"},
-    {words:["哥哥","在","房間","溫習功課"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"學生在家做什麼？"},
+    {words:["哥哥","在","房間","溫習","功課"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"學生在家做什麼？"},
     {words:["姐姐","彈奏","動聽的","鋼琴曲"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"優美的音樂誰發出的？"},
-    {words:["妹妹","把","玩具","收拾乾淨"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"好孩子要玩完後？"},
+    {words:["妹妹","把","玩具","收拾","乾淨"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"好孩子要玩完後？"},
     {words:["弟弟","在","地上","畫圖畫"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"小孩在創作？"},
-    {words:["我們","一家人","去","郊外野餐"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"全家出動？"},
+    {words:["我們","一家人","去","郊外","野餐"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"全家出動？"},
     {words:["爸爸","教我","如何","騎單車"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"新的技能是誰教的？"},
     {words:["媽媽","溫柔地","說","床邊故事"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"睡覺前聽什麼？"},
     {words:["爺爺","喜歡","在","早晨散步"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"老人家早起做什麼？"},
-    {words:["奶奶","做出","好吃的","傳統年糕"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"挑戰", hint:"過年時誰做點心？"},
+    {words:["奶奶","做出","美味的","傳統年糕"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"挑戰", hint:"過年時誰做點心？"},
     {words:["我們","合作","打掃","整個客廳"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"挑戰", hint:"大掃除？"},
     {words:["爸爸","修理","家中的","壞電器"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"壞了的東西誰處理？"},
-    {words:["媽媽","在","花園","種植玫瑰"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"漂亮的植物誰種的？"},
+    {words:["媽媽","在","花園","種植","玫瑰"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"漂亮的植物誰種的？"},
     {words:["姐姐","帶我","去","公共圖書館"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"去借書？"},
-    {words:["哥哥","陪我","在","球場踢球"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"戶外運動？"},
+    {words:["哥哥","陪我","在","球場","踢球"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"戶外運動？"},
     {words:["全家人","圍坐","在一起","吃年夜飯"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"挑戰", hint:"最重要的晚餐？"},
     {words:["我們","給","媽媽","慶祝生日"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"慶祝活動？"},
 
     // 生活 (20)
     {words:["我","每天","早睡","早起"], cat:"life", label:"📚 生活", diff:"簡單", hint:"良好的作息習慣？"},
-    {words:["老師","在","課室","教導學生"], cat:"life", label:"📚 生活", diff:"簡單", hint:"學校裡發生什麼？"},
+    {words:["老師","在","課室","教導","學生"], cat:"life", label:"📚 生活", diff:"中等", hint:"學校裡發生什麼？"},
     {words:["我們要","保持","雙手","清潔衛生"], cat:"life", label:"📚 生活", diff:"簡單", hint:"防疫小貼士？"},
-    {words:["飯前","必須","洗手","才能用餐"], cat:"life", label:"📚 生活", diff:"簡單", hint:"衛生習慣？"},
+    {words:["飯前","必須","洗手","才能","用餐"], cat:"life", label:"📚 生活", diff:"挑戰", hint:"衛生習慣？"},
     {words:["過馬路","要","利用","行人天橋"], cat:"life", label:"📚 生活", diff:"中等", hint:"交通安全？"},
-    {words:["我","喜歡","閱讀","有趣的繪本"], cat:"life", label:"📚 生活", diff:"簡單", hint:"課餘愛好？"},
+    {words:["我","喜歡","閱讀","有趣的","繪本"], cat:"life", label:"📚 生活", diff:"簡單", hint:"課餘愛好？"},
     {words:["小朋友","在","操場","排隊集合"], cat:"life", label:"📚 生活", diff:"中等", hint:"學校集會？"},
     {words:["我們","要","愛惜","食物","不浪費"], cat:"life", label:"📚 生活", diff:"挑戰", hint:"節約美德？"},
-    {words:["醫生","正在","為","病人診症"], cat:"life", label:"📚 生活", diff:"中等", hint:"診所裡的情況？"},
+    {words:["醫生","正在","為","病人","診症"], cat:"life", label:"📚 生活", diff:"中等", hint:"診所裡的情況？"},
     {words:["清潔工人","辛苦地","打掃","街道"], cat:"life", label:"📚 生活", diff:"挑戰", hint:"誰讓城市變乾淨？"},
     {words:["我","幫","鄰居","按","電梯門"], cat:"life", label:"📚 生活", diff:"中等", hint:"助人為快樂之本？"},
     {words:["垃圾","要","放入","分類回收箱"], cat:"life", label:"📚 生活", diff:"挑戰", hint:"環保行為？"},
-    {words:["早晨","陽光","照射","進房間"], cat:"life", label:"📚 生活", diff:"簡單", hint:"天亮了？"},
-    {words:["我要","準時","交","學校功課"], cat:"life", label:"📚 生活", diff:"簡單", hint:"學生的責任？"},
+    {words:["早晨的","陽光","照射","進房間"], cat:"life", label:"📚 生活", diff:"簡單", hint:"天亮了？"},
+    {words:["我要","準時","交","學校","功課"], cat:"life", label:"📚 生活", diff:"中等", hint:"學生的責任？"},
     {words:["圖書館","內","保持","安靜"], cat:"life", label:"📚 生活", diff:"簡單", hint:"閱讀場所的禮儀？"},
     {words:["每天","多吃","蔬菜","和水果"], cat:"life", label:"📚 生活", diff:"簡單", hint:"健康的飲食？"},
     {words:["睡覺前","要","記得","刷牙"], cat:"life", label:"📚 生活", diff:"簡單", hint:"睡前衛生？"},
     {words:["巴士","到站","了","請排隊"], cat:"life", label:"📚 生活", diff:"中等", hint:"乘車禮儀？"},
-    {words:["小朋友","在","文具店","買鉛筆"], cat:"life", label:"📚 生活", diff:"簡單", hint:"購物？"},
-    {words:["我們要","孝敬","父母","和長輩"], cat:"life", label:"📚 生活", diff:"挑戰", hint:"傳統美德？"},
+    {words:["小朋友","在","文具店","買","鉛筆"], cat:"life", label:"📚 生活", diff:"中等", hint:"購物？"},
+    {words:["我們要","孝敬","父母","和長輩"], cat:"life", label:"📚 生活", diff:"中等", hint:"傳統美德？"},
 
     // 自然 (20)
     {words:["太陽","從","東方","升起"], cat:"nature", label:"🌿 自然", diff:"簡單", hint:"日出的方向？"},
-    {words:["下雨了","大家","紛紛","撐起傘"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"天氣變化？"},
-    {words:["天空","出現了","一道","美麗彩虹"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"雨後美景？"},
+    {words:["下雨了","大家","紛紛","撐","起傘"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"天氣變化？"},
+    {words:["天空","出現了","一道","美麗的","彩虹"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"雨後美景？"},
     {words:["秋天","到了","樹葉","變黃了"], cat:"nature", label:"🌿 自然", diff:"簡單", hint:"季節特徵？"},
-    {words:["冬天天氣","非常","寒冷"], cat:"nature", label:"🌿 自然", diff:"簡單", hint:"冬天感覺？"},
+    {words:["冬天","天氣","非常","寒冷"], cat:"nature", label:"🌿 自然", diff:"簡單", hint:"冬天感覺？"},
     {words:["晚上","月亮","掛在","半空中"], cat:"nature", label:"🌿 自然", diff:"簡單", hint:"夜空景象？"},
     {words:["小草","在","春風中","生長"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"春天大地？"},
     {words:["雷聲","響起","天空","烏雲密佈"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"大雨前兆？"},
     {words:["雪花","在","空中","飛舞"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"下雪了？"},
     {words:["大海","的波浪","拍打著","岸邊"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"海邊聲音？"},
-    {words:["漫山遍野","開滿了","鮮艷的花"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"花海景象？"},
+    {words:["漫山遍野","開滿了","鮮艷的","花"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"花海景象？"},
     {words:["北風","呼呼地","吹過","大地"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"寒風刺骨？"},
     {words:["小溪","流水","發出","叮咚聲"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"水的聲音？"},
     {words:["流星","劃過","寂靜的","夜空"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"許願時刻？"},
@@ -281,18 +282,18 @@ const DATA = [
     {words:["我們","在","公園","玩滑梯"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"小朋友最愛的設施？"},
     {words:["小朋友","在","操場上","踢足球"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"球類運動？"},
     {words:["今天","是","開心的","遠足日"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"全校出遊？"},
-    {words:["我","最喜歡","到","海灘游泳"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"夏天活動？"},
+    {words:["我","最喜歡","到","海灘","游泳"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"夏天活動？"},
     {words:["我們","一起","搭建","積木城堡"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"動手創作？"},
     {words:["遊樂場","裡","充滿","歡笑聲"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"快樂的地方？"},
     {words:["大家","圍著","營火","唱歌跳舞"], cat:"fun", label:"🎈 玩樂", diff:"挑戰", hint:"露營活動？"},
     {words:["我和同學","一起","玩","捉迷藏"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"經典遊戲？"},
     {words:["風箏","在","藍天","越飛越高"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"需要風的遊戲？"},
     {words:["旋轉木馬","隨著","音樂","轉動"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"遊樂場設施？"},
-    {words:["我","畫了","一幅","七彩的圖畫"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"美術課？"},
+    {words:["我","畫了","一幅","七彩的","圖畫"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"美術課？"},
     {words:["大家","拍手","唱","生日歌"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"慶生派對？"},
-    {words:["我們","在","草地","吹肥皂泡"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"透明的小球？"},
+    {words:["我們","在","草地","吹","肥皂泡"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"透明的小球？"},
     {words:["紙飛機","飛向","遠處的","草地"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"簡單的手作玩具？"},
-    {words:["小朋友","在","水池","玩模型船"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"水上玩具？"},
+    {words:["小朋友","在","水池","玩","模型船"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"水上玩具？"},
     {words:["我們","開心地","玩","搖搖板"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"一高一低的遊戲？"},
     {words:["哥哥","正在","練習","花式跳繩"], cat:"fun", label:"🎈 玩樂", diff:"挑戰", hint:"運動技能？"},
     {words:["我在","主題公園","坐","過山車"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"刺激的設施？"},
@@ -446,6 +447,8 @@ function checkAnswer() {
     const mTitle = document.getElementById('mTitle');
     const mAns = document.getElementById('mAns');
     const mBonus = document.getElementById('mBonus');
+    const mSpeakBtn = document.getElementById('mSpeakBtn');
+    const mNextBtn = document.getElementById('mNextBtn');
 
     if (isCorrect) {
         gameState.streak++;
@@ -461,15 +464,49 @@ function checkAnswer() {
         mAns.innerText = correctSentence;
         mBonus.innerText = bonus > 0 ? `🔥 連續對了 ${gameState.streak} 題！額外 +${bonus} 分` : `獲得 ${points} 分`;
         
+        mSpeakBtn.innerText = "🔊 重聽";
+        mSpeakBtn.onclick = () => speak(correctSentence);
+        
+        mNextBtn.innerText = "下一題 👉";
+        mNextBtn.onclick = () => {
+            overlay.classList.remove('show');
+            nextQuestion();
+        };
+
         speak(correctSentence);
     } else {
         gameState.streak = 0;
-        mEmoji.innerText = "💡";
-        mTitle.innerText = "再接再厲！";
-        mTitle.style.color = "var(--pink)";
-        mAns.innerText = correctSentence;
-        mBonus.innerText = "別灰心，下次一定能答對！";
-        speak(`正確句子是：${correctSentence}`);
+        mEmoji.innerText = "🤔";
+        mTitle.innerText = "差一點點！";
+        mTitle.style.color = "var(--orange)";
+        mAns.innerHTML = "<span style='font-size:1.2rem; color:#fff;'>有幾個詞語放錯位置了，<br>要再挑戰一次嗎？</span>";
+        mBonus.innerText = "找出錯誤並修正它們！";
+
+        mSpeakBtn.innerText = "🔄 再試一次";
+        mSpeakBtn.onclick = () => {
+            overlay.classList.remove('show');
+            retryWrongWords();
+        };
+
+        mNextBtn.innerText = "👀 看答案";
+        mNextBtn.onclick = () => {
+            mTitle.innerText = "正確答案是：";
+            mTitle.style.color = "var(--pink)";
+            mAns.innerText = correctSentence;
+            mBonus.innerText = "別灰心，下次一定能答對！";
+            speak(`正確句子是：${correctSentence}`);
+
+            mSpeakBtn.innerText = "🔊 重聽";
+            mSpeakBtn.onclick = () => speak(correctSentence);
+
+            mNextBtn.innerText = "下一題 👉";
+            mNextBtn.onclick = () => {
+                overlay.classList.remove('show');
+                nextQuestion();
+            };
+        };
+        
+        speak("有幾個詞語放錯位置了，要再挑戰一次嗎？");
     }
 
     const badge = document.getElementById('streakBadge');
@@ -481,12 +518,31 @@ function checkAnswer() {
     }
 
     overlay.classList.add('show');
+}
 
-    document.getElementById('mNextBtn').onclick = () => {
-        overlay.classList.remove('show');
-        nextQuestion();
-    };
-    document.getElementById('mSpeakBtn').onclick = () => speak(correctSentence);
+function retryWrongWords() {
+    const q = gameState.questions[gameState.currentIdx];
+    const dropZone = document.getElementById('dropZone');
+    const slotElements = dropZone.children;
+
+    let hasWrong = false;
+    for (let i = 0; i < gameState.slots.length; i++) {
+        if (gameState.slots[i] !== q.words[i]) {
+            slotElements[i].classList.add('wrong');
+            hasWrong = true;
+        }
+    }
+
+    // 延遲一段時間讓玩家看到哪些錯了，然後將它們退回單詞池
+    if (hasWrong) {
+        setTimeout(() => {
+            for (let i = 0; i < gameState.slots.length; i++) {
+                if (gameState.slots[i] !== q.words[i]) {
+                    removeWord(i);
+                }
+            }
+        }, 600);
+    }
 }
 
 function nextQuestion() {
