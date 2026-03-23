@@ -2,71 +2,61 @@
 <html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌈 句子小達人 — 中文重組遊戲</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🌈 句子小達人 — 中文重組遊戲 Pro</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap');
 
         :root {
             --purple:#764ba2; --blue:#667eea; --green:#43e97b; --cyan:#38f9d7;
             --orange:#f7971e; --yellow:#ffd200; --pink:#f5576c; --magenta:#f093fb;
+            --bg-dark: #0f0c29;
         }
 
-        *{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-user-select:none;}
+        *{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-user-select:none;touch-action: manipulation;}
+        body{font-family:'Noto Sans TC',sans-serif;min-height:100vh;overflow-x:hidden;background:var(--bg-dark);color: #fff;}
 
-        body{font-family:'Noto Sans TC',sans-serif;min-height:100vh;overflow-x:hidden;background:#0f0c29;}
-
-        /* ===== BG ===== */
+        /* 背景特效 */
         .bg-gradient{position:fixed;inset:0;z-index:0;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);overflow:hidden;}
-        .bg-gradient::before{content:'';position:absolute;inset:-50%;background:conic-gradient(from 0deg at 50% 50%,rgba(102,126,234,.12),rgba(118,75,162,.12),rgba(245,87,108,.08),rgba(240,147,251,.08),rgba(67,233,123,.08),rgba(102,126,234,.12));animation:rotateBg 25s linear infinite;}
+        .bg-gradient::before{content:'';position:absolute;inset:-50%;background:conic-gradient(from 0deg at 50% 50%,rgba(102,126,234,.15),rgba(118,75,162,.15),rgba(245,87,108,.1),rgba(240,147,251,.1),rgba(67,233,123,.1),rgba(102,126,234,.15));animation:rotateBg 30s linear infinite;}
         @keyframes rotateBg{to{transform:rotate(360deg);}}
 
-        .orb{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;animation:orbF 8s ease-in-out infinite alternate;}
-        .orb-1{width:300px;height:300px;background:#667eea;top:8%;left:8%;animation-duration:11s;}
-        .orb-2{width:250px;height:250px;background:#f093fb;top:55%;right:4%;animation-duration:9s;animation-delay:2s;}
-        .orb-3{width:200px;height:200px;background:#43e97b;bottom:8%;left:28%;animation-duration:13s;animation-delay:4s;}
-        .orb-4{width:180px;height:180px;background:#ffd200;top:28%;right:22%;animation-duration:10s;animation-delay:1s;}
-        @keyframes orbF{0%{transform:translate(0,0) scale(1);}100%{transform:translate(40px,-40px) scale(1.15);}}
+        .orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.4;animation:orbF 10s ease-in-out infinite alternate;}
+        .orb-1{width:350px;height:350px;background:#667eea;top:5%;left:5%;}
+        .orb-2{width:300px;height:300px;background:#f093fb;bottom:10%;right:5%;animation-delay:2s;}
+        @keyframes orbF{0%{transform:translate(0,0) scale(1);}100%{transform:translate(50px,50px) scale(1.2);}}
 
         .stars-layer{position:absolute;inset:0;}
-        .tiny-star{position:absolute;width:3px;height:3px;background:#fff;border-radius:50%;animation:twinkle 2s ease-in-out infinite alternate;}
-        @keyframes twinkle{0%{opacity:.15;transform:scale(.7);}100%{opacity:1;transform:scale(1.3);}}
+        .tiny-star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite alternate;}
+        @keyframes twinkle{0%{opacity:.2;}100%{opacity:1;}}
 
-        .emoji-bubble{position:absolute;font-size:2rem;opacity:.12;animation:bubUp linear infinite;pointer-events:none;}
-        @keyframes bubUp{0%{transform:translateY(100vh) rotate(0) scale(.5);opacity:0;}8%{opacity:.15;}92%{opacity:.1;}100%{transform:translateY(-10vh) rotate(360deg) scale(1.2);opacity:0;}}
+        /* 遊戲容器 */
+        .game-wrapper{position:relative;z-index:1;max-width:900px;margin:0 auto;padding:15px;min-height:100vh;display: flex;flex-direction: column;}
 
-        /* ===== WRAPPER ===== */
-        .game-wrapper{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:12px 14px 36px;min-height:100vh;}
-
-        /* ===== HEADER ===== */
-        .header{text-align:center;margin-bottom:10px;position:relative;}
-        .header-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:300px;height:90px;background:radial-gradient(ellipse,rgba(102,126,234,.35),transparent 70%);pointer-events:none;}
-        .header h1{font-size:2.5rem;font-weight:900;background:linear-gradient(135deg,#ffd200,#f7971e,#f5576c,#f093fb,#667eea,#43e97b);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gTxt 4s ease infinite;letter-spacing:3px;position:relative;}
+        /* 標題區 */
+        .header{text-align:center;margin-bottom:15px;}
+        .header h1{font-size:2.8rem;font-weight:900;background:linear-gradient(135deg,#ffd200,#f7971e,#f5576c,#f093fb,#667eea,#43e97b);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gTxt 5s ease infinite;letter-spacing:2px;}
         @keyframes gTxt{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
-        .header .subtitle{font-size:1rem;color:rgba(255,255,255,.55);margin-top:2px;}
+        .header .subtitle{font-size:1.1rem;color:rgba(255,255,255,.6);margin-top:5px;}
 
-        /* ===== MASCOT ===== */
-        .mascot{position:fixed;bottom:18px;right:18px;z-index:50;font-size:3.2rem;animation:mBounce 2s ease-in-out infinite;cursor:pointer;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3));transition:transform .2s;}
-        .mascot:hover{transform:scale(1.2);}
-        @keyframes mBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
-        .mascot-speech{position:fixed;bottom:80px;right:14px;z-index:50;background:#fff;border-radius:16px 16px 4px 16px;padding:10px 16px;font-size:.95rem;font-weight:700;color:#764ba2;box-shadow:0 8px 30px rgba(0,0,0,.2);max-width:210px;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;}
+        /* 吉祥物 */
+        .mascot{position:fixed;bottom:20px;right:20px;z-index:50;font-size:3.5rem;cursor:pointer;filter:drop-shadow(0 5px 15px rgba(0,0,0,0.5));transition:transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+        .mascot:hover{transform:scale(1.2) rotate(10deg);}
+        .mascot-speech{position:fixed;bottom:90px;right:20px;z-index:51;background:#fff;border-radius:20px 20px 5px 20px;padding:12px 20px;font-size:1rem;font-weight:700;color:#302b63;box-shadow:0 10px 30px rgba(0,0,0,0.3);max-width:220px;opacity:0;transform:translateY(20px);transition:all 0.4s;pointer-events:none;}
         .mascot-speech.show{opacity:1;transform:translateY(0);}
 
-        /* ===== STATUS BAR ===== */
-        .status-bar{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:10px 20px;margin-bottom:12px;flex-wrap:wrap;gap:6px;}
-        .status-item{display:flex;align-items:center;gap:5px;color:#fff;font-size:1rem;font-weight:700;}
-        .status-item .icon{font-size:1.3rem;}
-        .streak-badge{background:linear-gradient(135deg,#f7971e,#ffd200);color:#7a4e00;font-size:.78rem;padding:2px 10px;border-radius:20px;font-weight:900;display:none;animation:popIn .3s cubic-bezier(.4,2,.6,1);}
-        .streak-badge.show{display:inline-flex;align-items:center;gap:3px;}
-        .progress-track{flex:1 1 100%;height:10px;background:rgba(255,255,255,.1);border-radius:5px;overflow:hidden;margin-top:3px;}
-        .progress-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--cyan),var(--blue));background-size:200% 100%;animation:shimmer 2s linear infinite;border-radius:5px;transition:width .6s cubic-bezier(.4,2,.6,1);width:0%;}
-        @keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+        /* 狀態列 */
+        .status-bar{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.08);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,.15);border-radius:24px;padding:12px 24px;margin-bottom:15px;gap:15px;flex-wrap: wrap;}
+        .status-item{display:flex;align-items:center;gap:8px;font-size:1.1rem;font-weight:700;}
+        .streak-badge{background:linear-gradient(135deg,#f7971e,#ffd200);color:#7a4e00;font-size:0.85rem;padding:4px 12px;border-radius:20px;font-weight:900;display:none;}
+        .streak-badge.show{display:inline-block;animation:popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+        .progress-container{width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-top: 5px;}
+        .progress-bar{height: 100%; background: linear-gradient(90deg, var(--green), var(--cyan)); width: 0%; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);}
 
-        /* ===== CATEGORY SELECTOR ===== */
-        .cat-selector{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;}
-        .cat-pill{padding:6px 16px;border-radius:30px;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .25s;border:1.5px solid rgba(255,255,255,.12);color:rgba(255,255,255,.55);background:rgba(255,255,255,.05);}
-        .cat-pill:hover{background:rgba(255,255,255,.1);color:#fff;}
-        .cat-pill.active{color:#fff;border-color:transparent;}
+        /* 分類選擇 */
+        .cat-selector{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:15px;}
+        .cat-pill{padding:8px 18px;border-radius:25px;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.3s;border:1.5px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);background:rgba(255,255,255,.05);}
+        .cat-pill.active{color:#fff;border-color:transparent;box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
         .cat-pill.active[data-cat="all"]{background:linear-gradient(135deg,#667eea,#764ba2);}
         .cat-pill.active[data-cat="animal"]{background:linear-gradient(135deg,#f7971e,#ffd200);}
         .cat-pill.active[data-cat="family"]{background:linear-gradient(135deg,#f093fb,#f5576c);}
@@ -74,522 +64,497 @@
         .cat-pill.active[data-cat="nature"]{background:linear-gradient(135deg,#4facfe,#00f2fe);}
         .cat-pill.active[data-cat="fun"]{background:linear-gradient(135deg,#fa709a,#fee140);}
 
-        /* ===== CARD ===== */
-        .card{background:rgba(255,255,255,.06);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:24px 20px 20px;margin-bottom:14px;position:relative;overflow:hidden;}
-        .card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--orange),var(--yellow),var(--green),var(--cyan),var(--blue),var(--purple),var(--pink),var(--magenta),var(--orange));background-size:300% 100%;animation:rainbowBar 3s linear infinite;}
-        @keyframes rainbowBar{from{background-position:0 0;}to{background-position:300% 0;}}
-        .card::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 20%,rgba(102,126,234,.07),transparent 50%);pointer-events:none;}
-        .question-section{position:relative;z-index:1;}
+        /* 遊戲卡片 */
+        .card{background:rgba(255,255,255,.07);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,.1);border-radius:32px;padding:25px;margin-bottom:20px;position:relative;box-shadow: 0 20px 50px rgba(0,0,0,0.3);}
+        .question-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap: wrap;}
+        .tag{padding:4px 12px;border-radius:15px;font-size:0.8rem;font-weight:800;text-transform: uppercase;}
+        .tag-cat{background: rgba(255,255,255,0.15); color: #fff;}
+        .tag-diff{background: rgba(67, 233, 123, 0.2); color: var(--green);}
 
-        /* ===== QUESTION LABEL ===== */
-        .question-label{font-size:1.1rem;color:rgba(255,255,255,.8);font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
-        .cat-tag{font-size:.82rem;padding:3px 12px;border-radius:20px;font-weight:800;color:#fff;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;}
-        .cat-tag[data-c="animal"]{background:linear-gradient(135deg,#f7971e,#ffd200);color:#7a4e00;}
-        .cat-tag[data-c="family"]{background:linear-gradient(135deg,#f093fb,#f5576c);}
-        .cat-tag[data-c="life"]{background:linear-gradient(135deg,#43e97b,#38f9d7);color:#1a5c3a;}
-        .cat-tag[data-c="nature"]{background:linear-gradient(135deg,#4facfe,#00f2fe);color:#0a3d6b;}
-        .cat-tag[data-c="fun"]{background:linear-gradient(135deg,#fa709a,#fee140);color:#7a2040;}
+        /* 放置區 */
+        .drop-zone{display:flex;flex-wrap:wrap;gap:15px;justify-content:center;min-height:90px;border:2px dashed rgba(255,255,255,.2);border-radius:24px;padding:20px;margin-bottom:20px;transition: all 0.3s;}
+        .slot{min-width:130px;height:65px;border:2px dashed rgba(255,255,255,.2);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:900;background:rgba(255,255,255,.03);cursor:pointer;position:relative;transition: all 0.3s;}
+        .slot.filled{border:2px solid var(--blue);background:rgba(102,126,234,.15);animation:popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+        .slot-num{position:absolute;top:-10px;left:-10px;width:24px;height:24px;background:var(--blue);border-radius:50%;font-size:0.7rem;display:flex;align-items:center;justify-content:center;}
 
-        .diff-tag{font-size:.75rem;padding:2px 10px;border-radius:20px;font-weight:800;}
-        .diff-easy{background:rgba(67,233,123,.18);color:#43e97b;border:1px solid rgba(67,233,123,.25);}
-        .diff-medium{background:rgba(255,210,0,.18);color:#ffd200;border:1px solid rgba(255,210,0,.25);}
-        .diff-hard{background:rgba(245,87,108,.18);color:#f5576c;border:1px solid rgba(245,87,108,.25);}
+        /* 單詞池 */
+        .word-pool{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:20px;}
+        .word-tile{padding:12px 24px;font-size:1.7rem;font-weight:900;border-radius:20px;cursor:pointer;transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);border:2px solid rgba(255,255,255,0.1);color: #fff;text-shadow: 0 2px 4px rgba(0,0,0,0.2);}
+        .word-tile:hover{transform:translateY(-5px) scale(1.05);box-shadow: 0 10px 20px rgba(0,0,0,0.25);}
+        .word-tile.used{opacity:0.1;pointer-events:none;transform:scale(0.9);}
 
-        .hint-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);font-size:.82rem;padding:4px 14px;border-radius:20px;font-weight:700;margin-left:auto;cursor:pointer;transition:all .2s;}
-        .hint-badge:hover{background:rgba(255,255,255,.15);transform:scale(1.06);}
+        /* 按鈕 */
+        .btn-group{display:flex;gap:15px;justify-content:center;margin-top:25px;}
+        .btn{padding:12px 30px;font-size:1.1rem;font-weight:800;border:none;border-radius:18px;cursor:pointer;transition:all 0.3s;display: flex;align-items: center;gap:8px;}
+        .btn-check{background:linear-gradient(135deg,var(--green),var(--cyan));color:#1a5c3a;}
+        .btn-reset{background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);}
+        .btn:active{transform:scale(0.95);}
 
-        /* ===== DROP ZONE ===== */
-        .drop-zone{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;min-height:76px;border:2px dashed rgba(255,255,255,.13);border-radius:20px;padding:14px 10px;margin-bottom:14px;transition:all .3s;position:relative;z-index:1;}
-        .drop-zone.all-filled{border-color:rgba(67,233,123,.35);background:rgba(67,233,123,.03);}
-        .slot{width:144px;height:66px;border:2px dashed rgba(255,255,255,.18);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;font-weight:900;color:rgba(255,255,255,.12);background:rgba(255,255,255,.025);transition:all .3s;position:relative;cursor:default;}
-        .slot .slot-num{position:absolute;top:-10px;left:-10px;width:24px;height:24px;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;font-size:.72rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;box-shadow:0 2px 8px rgba(0,0,0,.3);}
-        .slot.filled{border-style:solid;border-color:rgba(102,126,234,.45);background:rgba(102,126,234,.1);color:#fff;cursor:pointer;animation:popIn .3s cubic-bezier(.4,2,.6,1);text-shadow:0 2px 8px rgba(0,0,0,.2);}
-        .slot.filled:hover{transform:scale(1.06);border-color:rgba(245,87,108,.5);background:rgba(245,87,108,.12);box-shadow:0 4px 20px rgba(245,87,108,.15);}
-        .slot.correct-anim{border-color:rgba(67,233,123,.7)!important;background:rgba(67,233,123,.12)!important;animation:cPulse .6s ease;}
-        .slot.wrong-anim{border-color:rgba(245,87,108,.7)!important;background:rgba(245,87,108,.12)!important;animation:shake .5s ease;}
-        @keyframes cPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+        /* 回饋彈窗 */
+        .overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.8);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.4s;}
+        .overlay.show{opacity:1;pointer-events:auto;}
+        .modal{background:#1e1c3c;border-radius:35px;padding:40px;text-align:center;max-width:500px;width:90%;transform:scale(0.8);transition:transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);}
+        .overlay.show .modal{transform:scale(1);}
+        .modal-emoji{font-size:5rem;margin-bottom:15px;}
+        .modal-title{font-size:2rem;font-weight:900;margin-bottom:10px;}
+        .modal-ans{background:rgba(255,255,255,0.05);padding:20px;border-radius:20px;margin:20px 0;font-size:1.8rem;font-weight:700;color:var(--yellow);}
 
-        /* ===== WORD POOL ===== */
-        .word-pool-label{font-size:.9rem;color:rgba(255,255,255,.4);font-weight:700;margin-bottom:8px;text-align:center;position:relative;z-index:1;}
-        .word-pool{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;min-height:68px;padding:6px 0;position:relative;z-index:1;}
-        .word-tile{display:flex;align-items:center;justify-content:center;padding:11px 24px;font-size:1.8rem;font-weight:900;border-radius:18px;cursor:grab;transition:all .25s cubic-bezier(.4,2,.6,1);color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.2);position:relative;animation:popIn .4s cubic-bezier(.4,2,.6,1) both;border:2px solid rgba(255,255,255,.18);overflow:hidden;}
-        .word-tile::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 30%,rgba(255,255,255,.18),transparent 60%);pointer-events:none;}
-        .word-tile:active{cursor:grabbing;transform:scale(.95);}
-        .word-tile:hover{transform:translateY(-5px) scale(1.07);box-shadow:0 12px 30px rgba(0,0,0,.28);}
-        .word-tile.used{opacity:.13;pointer-events:none;transform:scale(.85);filter:grayscale(1);}
-        .word-tile.color-0{background:linear-gradient(135deg,#f7971e,#ffd200);}
-        .word-tile.color-1{background:linear-gradient(135deg,#43e97b,#38f9d7);}
-        .word-tile.color-2{background:linear-gradient(135deg,#667eea,#764ba2);}
-        .word-tile.color-3{background:linear-gradient(135deg,#f093fb,#f5576c);}
-        .word-tile.color-4{background:linear-gradient(135deg,#4facfe,#00f2fe);}
-        .word-tile.color-5{background:linear-gradient(135deg,#fa709a,#fee140);}
-        @keyframes popIn{0%{transform:scale(0) rotate(-10deg);opacity:0;}100%{transform:scale(1) rotate(0);opacity:1;}}
+        /* 動畫 */
+        @keyframes popIn{0%{transform:scale(0.5);opacity:0;}100%{transform:scale(1);opacity:1;}}
+        .shake{animation: shake 0.5s ease-in-out;}
+        @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-10px);}75%{transform:translateX(10px);}}
 
-        /* ===== SOUND WAVE ===== */
-        .sound-wave{display:inline-flex;align-items:center;gap:3px;margin-left:8px;height:18px;opacity:0;transition:opacity .3s;}
-        .sound-wave.active{opacity:1;}
-        .sound-wave span{display:block;width:3px;background:#4facfe;border-radius:2px;animation:sBar .6s ease-in-out infinite alternate;}
-        .sound-wave span:nth-child(1){height:8px;animation-delay:0s;}
-        .sound-wave span:nth-child(2){height:14px;animation-delay:.1s;}
-        .sound-wave span:nth-child(3){height:10px;animation-delay:.2s;}
-        .sound-wave span:nth-child(4){height:16px;animation-delay:.3s;}
-        .sound-wave span:nth-child(5){height:6px;animation-delay:.15s;}
-        @keyframes sBar{0%{height:4px;}100%{height:18px;}}
-
-        /* ===== BUTTONS ===== */
-        .btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px;position:relative;z-index:1;}
-        .btn{padding:11px 28px;font-size:1.1rem;font-weight:900;border:none;border-radius:16px;cursor:pointer;transition:all .25s;font-family:'Noto Sans TC',sans-serif;letter-spacing:1px;position:relative;overflow:hidden;}
-        .btn::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 30%,rgba(255,255,255,.18),transparent 60%);pointer-events:none;}
-        .btn:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(0,0,0,.2);}
-        .btn:active{transform:scale(.97);}
-        .btn-check{background:linear-gradient(135deg,#43e97b,#38f9d7);color:#1a5c3a;}
-        .btn-reset{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.65);}
-        .btn-reset:hover{background:rgba(255,255,255,.14);color:#fff;}
-        .btn-next{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;}
-        .btn-restart{background:linear-gradient(135deg,#f093fb,#f5576c);color:#fff;font-size:1.3rem;padding:16px 48px;}
-
-        .speak-btn{display:inline-flex;align-items:center;gap:5px;padding:8px 18px;background:linear-gradient(135deg,#4facfe,#00f2fe);color:#fff;font-size:.95rem;font-weight:900;border:none;border-radius:14px;cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:all .2s;box-shadow:0 4px 15px rgba(79,172,254,.25);}
-        .speak-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 8px 25px rgba(79,172,254,.35);}
-        .speak-btn:active{transform:scale(.97);}
-        .speak-btn.speaking{animation:sPulse .6s ease infinite;}
-        @keyframes sPulse{0%,100%{box-shadow:0 4px 15px rgba(79,172,254,.25);}50%{box-shadow:0 4px 30px rgba(79,172,254,.55);}}
-
-        /* ===== FEEDBACK ===== */
-        .feedback{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .4s;}
-        .feedback.show{opacity:1;pointer-events:auto;}
-        .feedback-bg{position:absolute;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);}
-        .feedback-box{position:relative;background:rgba(30,28,60,.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:28px;padding:32px 40px;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.4);animation:bounceIn .5s cubic-bezier(.4,2,.6,1);max-width:92vw;}
-        @keyframes bounceIn{0%{transform:scale(.3) translateY(60px);opacity:0;}100%{transform:scale(1) translateY(0);opacity:1;}}
-        .feedback-emoji{font-size:4.2rem;margin-bottom:6px;}
-        .feedback-text{font-size:1.7rem;font-weight:900;margin-bottom:5px;}
-        .feedback-sub{font-size:1.05rem;color:rgba(255,255,255,.45);margin-bottom:14px;}
-        .feedback-answer{font-size:1.5rem;font-weight:900;color:#ffd200;background:rgba(255,210,0,.07);border:1px solid rgba(255,210,0,.18);padding:11px 26px;border-radius:16px;display:inline-block;margin-bottom:14px;}
-        .correct .feedback-text{color:#43e97b;}
-        .wrong .feedback-text{color:#f5576c;}
-        .score-popup{font-size:1.05rem;font-weight:900;color:#ffd200;margin-bottom:12px;}
-
-        /* ===== HINT ===== */
-        .hint-overlay{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.45);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;}
-        .hint-overlay.show{opacity:1;pointer-events:auto;}
-        .hint-bubble{background:rgba(30,28,60,.95);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:30px 38px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4);max-width:90vw;animation:bounceIn .4s cubic-bezier(.4,2,.6,1);}
-        .hint-bubble .hint-emoji{font-size:3rem;margin-bottom:6px;}
-        .hint-bubble .hint-text{font-size:1.4rem;font-weight:700;color:#ffd200;margin-bottom:14px;}
-
-        /* ===== FINAL ===== */
-        .final-screen{text-align:center;padding:30px 14px;}
-        .final-screen .trophy{font-size:5.5rem;margin-bottom:6px;animation:tSpin 1s cubic-bezier(.4,2,.6,1);}
-        @keyframes tSpin{0%{transform:scale(0) rotateY(180deg);}100%{transform:scale(1) rotateY(0);}}
-        .final-screen h2{font-size:2.3rem;font-weight:900;background:linear-gradient(135deg,#ffd200,#f7971e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;}
-        .final-screen .final-score{font-size:1.15rem;color:rgba(255,255,255,.6);margin-bottom:18px;line-height:1.8;}
-        .star-row{display:flex;justify-content:center;gap:10px;margin-bottom:22px;}
-        .star-row .star{font-size:3.2rem;animation:starPop .5s cubic-bezier(.4,2,.6,1) both;}
-        .star-row .star:nth-child(2){animation-delay:.2s;}
-        .star-row .star:nth-child(3){animation-delay:.4s;}
-        @keyframes starPop{0%{transform:scale(0) rotate(-30deg);opacity:0;}100%{transform:scale(1) rotate(0);opacity:1;}}
-
-        /* Stats grid */
-        .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:360px;margin:0 auto 22px;}
-        .stat-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px 10px;text-align:center;}
-        .stat-card .stat-icon{font-size:1.8rem;margin-bottom:2px;}
-        .stat-card .stat-val{font-size:1.5rem;font-weight:900;color:#fff;}
-        .stat-card .stat-label{font-size:.78rem;color:rgba(255,255,255,.4);font-weight:700;}
-
-        /* ===== CONFETTI ===== */
-        .confetti-container{position:fixed;inset:0;z-index:200;pointer-events:none;overflow:hidden;}
-        .confetti-piece{position:absolute;top:-20px;border-radius:2px;animation:cFall linear forwards;}
-        @keyframes cFall{0%{transform:translateY(0) rotate(0) scale(1);opacity:1;}100%{transform:translateY(110vh) rotate(1080deg) scale(.5);opacity:0;}}
-
-        @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-10px);}40%{transform:translateX(10px);}60%{transform:translateX(-8px);}80%{transform:translateX(8px);}}
-        .shake{animation:shake .5s ease;}
-
-        .combo-float{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-size:2.8rem;font-weight:900;color:#ffd200;text-shadow:0 0 30px rgba(255,210,0,.6);pointer-events:none;z-index:150;animation:comboA 1.2s cubic-bezier(.4,2,.6,1) forwards;}
-        @keyframes comboA{0%{transform:translate(-50%,-50%) scale(0);opacity:0;}30%{transform:translate(-50%,-50%) scale(1.3);opacity:1;}100%{transform:translate(-50%,-80%) scale(.8);opacity:0;}}
-
-        /* ===== RESPONSIVE ===== */
         @media(max-width:600px){
-            .header h1{font-size:1.7rem;}
-            .word-tile{font-size:1.4rem;padding:9px 16px;}
-            .slot{width:110px;height:56px;font-size:1.35rem;}
-            .feedback-box{padding:24px 16px;}
-            .feedback-text{font-size:1.3rem;}
-            .btn{padding:10px 20px;font-size:.98rem;}
-            .mascot{font-size:2.4rem;bottom:10px;right:10px;}
-            .mascot-speech{bottom:58px;right:8px;font-size:.82rem;max-width:180px;}
-            .cat-pill{font-size:.78rem;padding:5px 12px;}
-            .stats-grid{grid-template-columns:repeat(2,1fr);max-width:280px;}
+            .header h1{font-size:2rem;}
+            .word-tile{font-size:1.4rem;padding:10px 18px;}
+            .slot{min-width:100px;height:55px;font-size:1.3rem;}
+            .modal-ans{font-size:1.4rem;}
         }
     </style>
 </head>
 <body>
 
-<div class="bg-gradient">
-    <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div><div class="orb orb-4"></div>
-    <div class="stars-layer" id="starsLayer"></div>
+<div class="bg-gradient" id="bgLayer">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
 </div>
 
-<div class="mascot" id="mascot" onclick="mascotTap()">🐻</div>
-<div class="mascot-speech" id="mascotSpeech"></div>
+<div class="mascot" id="mascot" onclick="talkMascot()">🐻</div>
+<div class="mascot-speech" id="mascotSpeech">加油哦！</div>
 
-<div class="game-wrapper" id="gameWrapper">
+<div class="game-wrapper">
     <div class="header">
-        <div class="header-glow"></div>
-        <h1>✨ 句子小達人 ✨</h1>
-        <p class="subtitle">拖拖排排，砌出啱嘅句子！</p>
+        <h1>✨ 句子小達人 Pro</h1>
+        <p class="subtitle">將詞語拖放到正確位置，組成完整的句子！</p>
     </div>
 
-    <!-- Category Selector -->
     <div class="cat-selector" id="catSelector">
-        <div class="cat-pill active" data-cat="all" onclick="selectCat('all')">🌈 全部</div>
-        <div class="cat-pill" data-cat="animal" onclick="selectCat('animal')">🐾 動物</div>
-        <div class="cat-pill" data-cat="family" onclick="selectCat('family')">👨‍👩‍👧 家庭</div>
-        <div class="cat-pill" data-cat="life" onclick="selectCat('life')">📚 生活</div>
-        <div class="cat-pill" data-cat="nature" onclick="selectCat('nature')">🌿 自然</div>
-        <div class="cat-pill" data-cat="fun" onclick="selectCat('fun')">🎈 玩樂</div>
+        <div class="cat-pill active" data-cat="all">🌈 全部</div>
+        <div class="cat-pill" data-cat="animal">🐾 動物</div>
+        <div class="cat-pill" data-cat="family">👨‍👩‍👧 家庭</div>
+        <div class="cat-pill" data-cat="life">📚 生活</div>
+        <div class="cat-pill" data-cat="nature">🌿 自然</div>
+        <div class="cat-pill" data-cat="fun">🎈 玩樂</div>
     </div>
 
-    <div class="status-bar" id="statusBar">
-        <div class="status-item"><span class="icon">📖</span> 第 <span id="currentQ">1</span>/<span id="totalQ">10</span> 題</div>
-        <div class="status-item"><span class="icon">⭐</span> <span id="score">0</span> 分</div>
-        <span class="streak-badge" id="streakBadge">🔥 <span id="streakNum">0</span> 連對</span>
-        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="status-bar">
+        <div class="status-item">第 <span id="curIdx">1</span> / <span id="totalIdx">10</span> 題</div>
+        <div class="status-item">⭐ <span id="score">0</span> 分</div>
+        <div class="streak-badge" id="streakBadge">🔥 <span id="streakCount">0</span> 連對</div>
+        <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
     </div>
 
     <div class="card" id="gameCard">
-        <div class="question-section">
-            <div class="question-label">
-                <span>📝 排出正確嘅句子</span>
-                <span class="cat-tag" id="catTag" data-c="animal">🐾 動物</span>
-                <span class="diff-tag diff-easy" id="diffTag">簡單</span>
-                <span class="hint-badge" id="hintBtn">💡 提示</span>
-            </div>
+        <div class="question-header">
+            <span class="tag tag-cat" id="qCat">🐾 動物</span>
+            <span class="tag tag-diff" id="qDiff">簡單</span>
+            <span style="margin-left:auto; cursor:pointer;" onclick="showHint()">💡 提示</span>
+        </div>
+        
+        <div class="drop-zone" id="dropZone"></div>
+        
+        <div style="text-align:center; color:rgba(255,255,255,0.4); font-size:0.9rem;">👇 點擊下方詞語填入空格</div>
+        <div class="word-pool" id="wordPool"></div>
 
-            <div class="drop-zone" id="dropZone"></div>
-
-            <div class="word-pool-label">
-                👇 撳詞語放入格仔
-                <div class="sound-wave" id="soundWave">
-                    <span></span><span></span><span></span><span></span><span></span>
-                </div>
-            </div>
-            <div class="word-pool" id="wordPool"></div>
-
-            <div class="btn-row">
-                <button class="btn btn-reset" onclick="resetCurrent()">🔄 重嚟</button>
-                <button class="btn btn-check" onclick="checkAnswer()">✅ 確認答案</button>
-            </div>
+        <div class="btn-group">
+            <button class="btn btn-reset" onclick="resetSlots()">🔄 重設</button>
+            <button class="btn btn-check" onclick="checkAnswer()">✅ 檢查答案</button>
         </div>
     </div>
 
-    <div class="final-screen" id="finalScreen" style="display:none;"></div>
+    <div id="finalView" style="display:none; text-align:center; padding:40px;">
+        <div style="font-size:6rem;">🏆</div>
+        <h2 style="font-size:2.5rem; margin-bottom:20px;">挑戰完成！</h2>
+        <div id="finalStats" style="font-size:1.3rem; line-height:2; margin-bottom:30px;"></div>
+        <button class="btn btn-check" style="margin:0 auto; font-size:1.5rem;" onclick="location.reload()">再玩一次</button>
+    </div>
 </div>
 
-<div class="feedback" id="feedback">
-    <div class="feedback-bg" onclick="closeFeedback()"></div>
-    <div class="feedback-box" id="feedbackBox"></div>
+<div class="overlay" id="modalOverlay">
+    <div class="modal" id="feedbackModal">
+        <div class="modal-emoji" id="mEmoji">🎉</div>
+        <div class="modal-title" id="mTitle">答對了！</div>
+        <div style="color:rgba(255,255,255,0.6);">正確句子：</div>
+        <div class="modal-ans" id="mAns"></div>
+        <div id="mBonus" style="color:var(--yellow); font-weight:900; margin-bottom:15px;"></div>
+        <div style="display:flex; gap:10px; justify-content:center;">
+            <button class="btn btn-reset" id="mSpeakBtn">🔊 重聽</button>
+            <button class="btn btn-check" id="mNextBtn">下一題 👉</button>
+        </div>
+    </div>
 </div>
-<div class="hint-overlay" id="hintOverlay">
-    <div class="hint-bubble" id="hintBubble"></div>
-</div>
-<div class="confetti-container" id="confettiContainer"></div>
 
 <script>
-/* =======================================
-   CANTONESE SPEECH
-   ======================================= */
-let cantoVoice=null;
-function initSpeech(){
-    if(!('speechSynthesis' in window))return;
-    const load=()=>{const v=speechSynthesis.getVoices();cantoVoice=v.find(x=>x.lang==='zh-HK')||v.find(x=>x.lang.startsWith('zh-HK'))||v.find(x=>x.lang==='zh-TW')||v.find(x=>x.lang.startsWith('zh'))||null;};
-    speechSynthesis.onvoiceschanged=load;load();
-}
-function speakCantonese(text,rate=.85,onEnd){
-    if(!('speechSynthesis' in window)){if(onEnd)onEnd();return;}
-    speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(text);u.lang='zh-HK';if(cantoVoice)u.voice=cantoVoice;u.rate=rate;u.pitch=1.15;u.volume=1;
-    const w=document.getElementById('soundWave');w.classList.add('active');
-    u.onend=()=>{w.classList.remove('active');if(onEnd)onEnd();};
-    u.onerror=()=>{w.classList.remove('active');if(onEnd)onEnd();};
-    speechSynthesis.speak(u);
-}
-function speakWord(t){speakCantonese(t,.82);}
-function speakSentence(arr){speakCantonese(arr.join(''),.75);}
-initSpeech();
+/**
+ * 題庫擴充至 100 句 (書面語)
+ */
+const DATA = [
+    // 動物 (20)
+    {words:["小貓","在","沙發上","睡覺"], cat:"animal", label:"🐾 動物", diff:"簡單", hint:"小動物在哪裡休息？"},
+    {words:["小狗","在","草地上","奔跑"], cat:"animal", label:"🐾 動物", diff:"簡單", hint:"狗狗喜歡在哪裡玩？"},
+    {words:["金魚","在","魚缸裡","游來游去"], cat:"animal", label:"🐾 動物", diff:"簡單", hint:"小魚在哪裡活動？"},
+    {words:["小鳥","在","枝頭上","唱歌"], cat:"animal", label:"🐾 動物", diff:"簡單", hint:"誰在樹上叫？"},
+    {words:["蝴蝶","在","花叢中","飛舞"], cat:"animal", label:"🐾 動物", diff:"簡單", hint:"彩色的昆蟲在做什麼？"},
+    {words:["企鵝","住在","冰天雪地","的南極"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"這種鳥住在哪裡？"},
+    {words:["袋鼠","的肚子裡","有一個","小袋鼠"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"跳跳澳洲動物的特徵？"},
+    {words:["烏龜","爬行","的速度","非常緩慢"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"牠走得快嗎？"},
+    {words:["長頸鹿","有","一條","長長的脖子"], cat:"animal", label:"🐾 動物", diff:"簡單", hint:"牠最高的特徵？"},
+    {words:["大象","用","長鼻子","吸水洗澡"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"象如何洗澡？"},
+    {words:["蜜蜂","忙著","在花間","採集花粉"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"小昆蟲在工作？"},
+    {words:["青蛙","在","荷葉上","捕捉害蟲"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"田園小英雄在做什麼？"},
+    {words:["兔子","最喜歡","吃","蘿蔔"], cat:"animal", label:"🐾 動物", diff:"簡單", hint:"長耳朵吃什麼？"},
+    {words:["孔雀","展開","了","美麗的羽毛"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"最漂亮的開屏？"},
+    {words:["猴子","在","樹林裡","盪來盪去"], cat:"animal", label:"🐾 動物", diff:"簡單", hint:"靈活的動物在森林？"},
+    {words:["老鷹","在","高空中","盤旋"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"天空霸主在做什麼？"},
+    {words:["螃蟹","在","沙灘上","橫著走路"], cat:"animal", label:"🐾 動物", diff:"中等", hint:"海邊生物走路方式？"},
+    {words:["貓頭鷹","在","黑夜裡","捕捉獵物"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"晚上不睡覺的鳥？"},
+    {words:["松鼠","在","樹洞裡","儲存橡果"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"小動物如何過冬？"},
+    {words:["蠶寶寶","喜歡","吃","新鮮的桑葉"], cat:"animal", label:"🐾 動物", diff:"挑戰", hint:"牠長大會變蛾？"},
 
-/* =======================================
-   50 SENTENCES DATABASE
-   ======================================= */
-const ALL_SENTENCES=[
-    // ===== 動物 (animal) — 10 =====
-    {words:["小貓","在","沙發上","睡覺"],hint:"小動物喺邊度瞓覺？",cat:"animal",catLabel:"🐱 動物",diff:"easy"},
-    {words:["小狗","在","草地上","跑"],hint:"小狗喺邊度玩？",cat:"animal",catLabel:"🐶 動物",diff:"easy"},
-    {words:["小鳥","在","天上","飛"],hint:"天上面有咩喺度飛？",cat:"animal",catLabel:"🐦 動物",diff:"easy"},
-    {words:["小魚","在","水裏","游"],hint:"小魚喺邊度游水？",cat:"animal",catLabel:"🐟 動物",diff:"easy"},
-    {words:["小兔","愛吃","紅","蘿蔔"],hint:"小兔鍾意食乜嘢？",cat:"animal",catLabel:"🐰 動物",diff:"easy"},
-    {words:["蝴蝶","停在","花朵","上"],hint:"蝴蝶飛去邊度？",cat:"animal",catLabel:"🦋 動物",diff:"easy"},
-    {words:["青蛙","跳進","池塘","裏"],hint:"青蛙跳去咗邊度？",cat:"animal",catLabel:"🐸 動物",diff:"medium"},
-    {words:["小雞","跟着","雞媽媽","走"],hint:"小雞跟住邊個？",cat:"animal",catLabel:"🐥 動物",diff:"medium"},
-    {words:["螞蟻","搬着","食物","走"],hint:"螞蟻喺度做咩？",cat:"animal",catLabel:"🐜 動物",diff:"medium"},
-    {words:["大象","用","鼻子","喝水"],hint:"大象用咩嚟飲水？",cat:"animal",catLabel:"🐘 動物",diff:"hard"},
+    // 家庭 (20)
+    {words:["媽媽","煮了","豐富的","晚餐"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"誰在廚房忙碌？"},
+    {words:["爸爸","正在","書房","辛勤工作"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"爸爸在做什麼？"},
+    {words:["爺爺","在","公園","練習太極"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"長輩在運動？"},
+    {words:["奶奶","為我","織了","一件毛衣"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"溫暖的衣服是誰做的？"},
+    {words:["哥哥","在","房間","溫習功課"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"學生在家做什麼？"},
+    {words:["姐姐","彈奏","動聽的","鋼琴曲"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"優美的音樂誰發出的？"},
+    {words:["妹妹","把","玩具","收拾乾淨"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"好孩子要玩完後？"},
+    {words:["弟弟","在","地上","畫圖畫"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"小孩在創作？"},
+    {words:["我們","一家人","去","郊外野餐"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"全家出動？"},
+    {words:["爸爸","教我","如何","騎單車"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"新的技能是誰教的？"},
+    {words:["媽媽","溫柔地","說","床邊故事"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"睡覺前聽什麼？"},
+    {words:["爺爺","喜歡","在","早晨散步"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"老人家早起做什麼？"},
+    {words:["奶奶","做出","好吃的","傳統年糕"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"挑戰", hint:"過年時誰做點心？"},
+    {words:["我們","合作","打掃","整個客廳"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"挑戰", hint:"大掃除？"},
+    {words:["爸爸","修理","家中的","壞電器"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"壞了的東西誰處理？"},
+    {words:["媽媽","在","花園","種植玫瑰"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"漂亮的植物誰種的？"},
+    {words:["姐姐","帶我","去","公共圖書館"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"去借書？"},
+    {words:["哥哥","陪我","在","球場踢球"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"簡單", hint:"戶外運動？"},
+    {words:["全家人","圍坐","在一起","吃年夜飯"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"挑戰", hint:"最重要的晚餐？"},
+    {words:["我們","給","媽媽","慶祝生日"], cat:"family", label:"👨‍👩‍👧 家庭", diff:"中等", hint:"慶祝活動？"},
 
-    // ===== 家庭 (family) — 10 =====
-    {words:["媽媽","煮了","好吃的","飯菜"],hint:"邊個喺廚房煮嘢食？",cat:"family",catLabel:"👩 家庭",diff:"easy"},
-    {words:["爸爸","帶我","去","動物園"],hint:"爸爸帶我去邊度玩？",cat:"family",catLabel:"👨 家庭",diff:"easy"},
-    {words:["姐姐","畫了","漂亮的","圖畫"],hint:"姐姐畫咗啲咩？",cat:"family",catLabel:"👧 家庭",diff:"easy"},
-    {words:["弟弟","在","公園","玩"],hint:"弟弟去咗邊度？",cat:"family",catLabel:"👦 家庭",diff:"easy"},
-    {words:["奶奶","講了","好聽的","故事"],hint:"奶奶做緊咩？",cat:"family",catLabel:"👵 家庭",diff:"easy"},
-    {words:["妹妹","穿了","新的","裙子"],hint:"妹妹著咗咩衫？",cat:"family",catLabel:"👧 家庭",diff:"easy"},
-    {words:["哥哥","騎","紅色的","單車"],hint:"哥哥做緊咩運動？",cat:"family",catLabel:"🚴 家庭",diff:"medium"},
-    {words:["爺爺","坐在","大樹","下"],hint:"爺爺坐喺邊度？",cat:"family",catLabel:"👴 家庭",diff:"easy"},
-    {words:["爸爸","修好了","壞掉的","玩具"],hint:"爸爸整好咗咩？",cat:"family",catLabel:"🔧 家庭",diff:"hard"},
-    {words:["媽媽","抱着","可愛的","寶寶"],hint:"媽媽抱住邊個？",cat:"family",catLabel:"👶 家庭",diff:"medium"},
+    // 生活 (20)
+    {words:["我","每天","早睡","早起"], cat:"life", label:"📚 生活", diff:"簡單", hint:"良好的作息習慣？"},
+    {words:["老師","在","課室","教導學生"], cat:"life", label:"📚 生活", diff:"簡單", hint:"學校裡發生什麼？"},
+    {words:["我們要","保持","雙手","清潔衛生"], cat:"life", label:"📚 生活", diff:"簡單", hint:"防疫小貼士？"},
+    {words:["飯前","必須","洗手","才能用餐"], cat:"life", label:"📚 生活", diff:"簡單", hint:"衛生習慣？"},
+    {words:["過馬路","要","利用","行人天橋"], cat:"life", label:"📚 生活", diff:"中等", hint:"交通安全？"},
+    {words:["我","喜歡","閱讀","有趣的繪本"], cat:"life", label:"📚 生活", diff:"簡單", hint:"課餘愛好？"},
+    {words:["小朋友","在","操場","排隊集合"], cat:"life", label:"📚 生活", diff:"中等", hint:"學校集會？"},
+    {words:["我們","要","愛惜","食物","不浪費"], cat:"life", label:"📚 生活", diff:"挑戰", hint:"節約美德？"},
+    {words:["醫生","正在","為","病人診症"], cat:"life", label:"📚 生活", diff:"中等", hint:"診所裡的情況？"},
+    {words:["清潔工人","辛苦地","打掃","街道"], cat:"life", label:"📚 生活", diff:"挑戰", hint:"誰讓城市變乾淨？"},
+    {words:["我","幫","鄰居","按","電梯門"], cat:"life", label:"📚 生活", diff:"中等", hint:"助人為快樂之本？"},
+    {words:["垃圾","要","放入","分類回收箱"], cat:"life", label:"📚 生活", diff:"挑戰", hint:"環保行為？"},
+    {words:["早晨","陽光","照射","進房間"], cat:"life", label:"📚 生活", diff:"簡單", hint:"天亮了？"},
+    {words:["我要","準時","交","學校功課"], cat:"life", label:"📚 生活", diff:"簡單", hint:"學生的責任？"},
+    {words:["圖書館","內","保持","安靜"], cat:"life", label:"📚 生活", diff:"簡單", hint:"閱讀場所的禮儀？"},
+    {words:["每天","多吃","蔬菜","和水果"], cat:"life", label:"📚 生活", diff:"簡單", hint:"健康的飲食？"},
+    {words:["睡覺前","要","記得","刷牙"], cat:"life", label:"📚 生活", diff:"簡單", hint:"睡前衛生？"},
+    {words:["巴士","到站","了","請排隊"], cat:"life", label:"📚 生活", diff:"中等", hint:"乘車禮儀？"},
+    {words:["小朋友","在","文具店","買鉛筆"], cat:"life", label:"📚 生活", diff:"簡單", hint:"購物？"},
+    {words:["我們要","孝敬","父母","和長輩"], cat:"life", label:"📚 生活", diff:"挑戰", hint:"傳統美德？"},
 
-    // ===== 生活 (life) — 10 =====
-    {words:["我","喜歡","吃","蘋果"],hint:"我鍾意食邊種水果？",cat:"life",catLabel:"🍎 生活",diff:"easy"},
-    {words:["我","每天","刷牙","洗臉"],hint:"每日朝早做咩？",cat:"life",catLabel:"🪥 生活",diff:"easy"},
-    {words:["老師","教","我們","寫字"],hint:"老師喺課室做咩？",cat:"life",catLabel:"📚 生活",diff:"easy"},
-    {words:["小朋友","排隊","買","雪糕"],hint:"小朋友想食咩？",cat:"life",catLabel:"🍦 生活",diff:"medium"},
-    {words:["我","幫","媽媽","掃地"],hint:"我幫媽媽做咩？",cat:"life",catLabel:"🧹 生活",diff:"easy"},
-    {words:["書包","裏面","有","課本"],hint:"書包入面有乜？",cat:"life",catLabel:"🎒 生活",diff:"easy"},
-    {words:["早餐","要吃","雞蛋","牛奶"],hint:"早餐食啲咩？",cat:"life",catLabel:"🥛 生活",diff:"medium"},
-    {words:["我們","一起","打掃","教室"],hint:"大家一齊做咩？",cat:"life",catLabel:"🏫 生活",diff:"medium"},
-    {words:["鬧鐘","響了","快","起床"],hint:"鬧鐘響咗要做咩？",cat:"life",catLabel:"⏰ 生活",diff:"hard"},
-    {words:["放學後","我","做","功課"],hint:"放學之後做咩？",cat:"life",catLabel:"✏️ 生活",diff:"medium"},
+    // 自然 (20)
+    {words:["太陽","從","東方","升起"], cat:"nature", label:"🌿 自然", diff:"簡單", hint:"日出的方向？"},
+    {words:["下雨了","大家","紛紛","撐起傘"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"天氣變化？"},
+    {words:["天空","出現了","一道","美麗彩虹"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"雨後美景？"},
+    {words:["秋天","到了","樹葉","變黃了"], cat:"nature", label:"🌿 自然", diff:"簡單", hint:"季節特徵？"},
+    {words:["冬天天氣","非常","寒冷"], cat:"nature", label:"🌿 自然", diff:"簡單", hint:"冬天感覺？"},
+    {words:["晚上","月亮","掛在","半空中"], cat:"nature", label:"🌿 自然", diff:"簡單", hint:"夜空景象？"},
+    {words:["小草","在","春風中","生長"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"春天大地？"},
+    {words:["雷聲","響起","天空","烏雲密佈"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"大雨前兆？"},
+    {words:["雪花","在","空中","飛舞"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"下雪了？"},
+    {words:["大海","的波浪","拍打著","岸邊"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"海邊聲音？"},
+    {words:["漫山遍野","開滿了","鮮艷的花"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"花海景象？"},
+    {words:["北風","呼呼地","吹過","大地"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"寒風刺骨？"},
+    {words:["小溪","流水","發出","叮咚聲"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"水的聲音？"},
+    {words:["流星","劃過","寂靜的","夜空"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"許願時刻？"},
+    {words:["晨露","停在","葉片","上面"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"清晨的景象？"},
+    {words:["山峰","被","濃霧","籠罩著"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"山上看不清？"},
+    {words:["瀑布","從","山頂","傾瀉而下"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"壯觀的水景？"},
+    {words:["大樹","為我們","遮擋","陽光"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"樹下的清涼？"},
+    {words:["泥土","散發出","陣陣","清香"], cat:"nature", label:"🌿 自然", diff:"挑戰", hint:"雨後味道？"},
+    {words:["四季","不停地","輪流","替換"], cat:"nature", label:"🌿 自然", diff:"中等", hint:"時間流轉？"},
 
-    // ===== 自然 (nature) — 10 =====
-    {words:["太陽","今天","很","大"],hint:"今日天氣點樣？",cat:"nature",catLabel:"☀️ 自然",diff:"easy"},
-    {words:["花兒","開得","很","漂亮"],hint:"花兒點樣㗎？",cat:"nature",catLabel:"🌸 自然",diff:"easy"},
-    {words:["月亮","掛在","天上","笑"],hint:"夜晚天空有咩？",cat:"nature",catLabel:"🌙 自然",diff:"easy"},
-    {words:["雨點","落在","屋頂","上"],hint:"落雨嗰時雨點喺邊？",cat:"nature",catLabel:"🌧️ 自然",diff:"easy"},
-    {words:["彩虹","出現","在","天空"],hint:"落完雨天空有咩？",cat:"nature",catLabel:"🌈 自然",diff:"easy"},
-    {words:["白雲","飄在","藍天","上"],hint:"天空有啲咩飄緊？",cat:"nature",catLabel:"☁️ 自然",diff:"easy"},
-    {words:["星星","閃閃","亮晶","晶"],hint:"夜晚天空邊個喺度閃？",cat:"nature",catLabel:"⭐ 自然",diff:"medium"},
-    {words:["樹葉","變成","黃色","了"],hint:"秋天樹葉點樣？",cat:"nature",catLabel:"🍂 自然",diff:"medium"},
-    {words:["雪花","飄落","在","地上"],hint:"冬天有咩飄落嚟？",cat:"nature",catLabel:"❄️ 自然",diff:"medium"},
-    {words:["春天","到了","花兒","開"],hint:"春天有咩變化？",cat:"nature",catLabel:"🌷 自然",diff:"hard"},
-
-    // ===== 玩樂 (fun) — 10 =====
-    {words:["我們","一起","唱","兒歌"],hint:"大家一齊做咩？",cat:"fun",catLabel:"🎵 玩樂",diff:"easy"},
-    {words:["我們","去","海邊","玩"],hint:"我哋去邊度玩？",cat:"fun",catLabel:"🏖️ 玩樂",diff:"easy"},
-    {words:["氣球","飛到","天上","去"],hint:"氣球飛去咗邊度？",cat:"fun",catLabel:"🎈 玩樂",diff:"easy"},
-    {words:["生日","蛋糕","好","甜"],hint:"生日食嘅嘢點樣㗎？",cat:"fun",catLabel:"🎂 玩樂",diff:"easy"},
-    {words:["滑梯","好","高","好好玩"],hint:"公園入面咩好好玩？",cat:"fun",catLabel:"🛝 玩樂",diff:"easy"},
-    {words:["我","畫了","一隻","恐龍"],hint:"我畫咗咩動物？",cat:"fun",catLabel:"🖍️ 玩樂",diff:"medium"},
-    {words:["我們","在","沙灘","堆沙"],hint:"我哋喺沙灘做咩？",cat:"fun",catLabel:"🏖️ 玩樂",diff:"medium"},
-    {words:["木馬","轉呀","轉呀","轉"],hint:"遊樂場邊個喺度轉？",cat:"fun",catLabel:"🎠 玩樂",diff:"medium"},
-    {words:["紙飛機","飛得","好","遠"],hint:"紙飛機飛得點樣？",cat:"fun",catLabel:"✈️ 玩樂",diff:"hard"},
-    {words:["我","最","喜歡","畫畫"],hint:"我最鍾意做咩？",cat:"fun",catLabel:"🎨 玩樂",diff:"easy"},
+    // 玩樂 (20)
+    {words:["我們","在","公園","玩滑梯"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"小朋友最愛的設施？"},
+    {words:["小朋友","在","操場上","踢足球"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"球類運動？"},
+    {words:["今天","是","開心的","遠足日"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"全校出遊？"},
+    {words:["我","最喜歡","到","海灘游泳"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"夏天活動？"},
+    {words:["我們","一起","搭建","積木城堡"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"動手創作？"},
+    {words:["遊樂場","裡","充滿","歡笑聲"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"快樂的地方？"},
+    {words:["大家","圍著","營火","唱歌跳舞"], cat:"fun", label:"🎈 玩樂", diff:"挑戰", hint:"露營活動？"},
+    {words:["我和同學","一起","玩","捉迷藏"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"經典遊戲？"},
+    {words:["風箏","在","藍天","越飛越高"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"需要風的遊戲？"},
+    {words:["旋轉木馬","隨著","音樂","轉動"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"遊樂場設施？"},
+    {words:["我","畫了","一幅","七彩的圖畫"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"美術課？"},
+    {words:["大家","拍手","唱","生日歌"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"慶生派對？"},
+    {words:["我們","在","草地","吹肥皂泡"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"透明的小球？"},
+    {words:["紙飛機","飛向","遠處的","草地"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"簡單的手作玩具？"},
+    {words:["小朋友","在","水池","玩模型船"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"水上玩具？"},
+    {words:["我們","開心地","玩","搖搖板"], cat:"fun", label:"🎈 玩樂", diff:"簡單", hint:"一高一低的遊戲？"},
+    {words:["哥哥","正在","練習","花式跳繩"], cat:"fun", label:"🎈 玩樂", diff:"挑戰", hint:"運動技能？"},
+    {words:["我在","主題公園","坐","過山車"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"刺激的設施？"},
+    {words:["小朋友","換上","漂亮的","派對衣服"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"盛裝出席？"},
+    {words:["暑假","是","小朋友","最期待的"], cat:"fun", label:"🎈 玩樂", diff:"中等", hint:"長假期？"},
 ];
 
-/* =======================================
-   GAME STATE
-   ======================================= */
-const TOTAL=10;
-let selectedCat='all';
-let sentences=[];
-let current=0,score=0,streak=0,bestStreak=0,answeredCorrectly=0;
-let slots=[],usedWords=[],shuffledWords=[];
-
-const CAT_MAP={all:"🌈 全部",animal:"🐾 動物",family:"👨‍👩‍👧 家庭",life:"📚 生活",nature:"🌿 自然",fun:"🎈 玩樂"};
-const DIFF_LABELS={easy:"簡單",medium:"中等",hard:"挑戰"};
-const MASCOT_MSGS=["加油呀！你得㗎！💪","慢慢諗，唔使急 😊","你好叻呀！👏","揀啱嘅詞語排好佢！","撳提示可以幫到你 💡","做得好好呀！繼續！","你係句子小達人！🌟"];
-
-/* ===== Category Selector ===== */
-function selectCat(cat){
-    selectedCat=cat;
-    document.querySelectorAll('.cat-pill').forEach(p=>{p.classList.toggle('active',p.dataset.cat===cat);});
-    init();
-}
-
-/* ===== Init ===== */
-function init(){
-    let pool=selectedCat==='all'?[...ALL_SENTENCES]:ALL_SENTENCES.filter(s=>s.cat===selectedCat);
-    pool.sort(()=>Math.random()-.5);
-    const count=Math.min(TOTAL,pool.length);
-    sentences=pool.slice(0,count);
-    current=0;score=0;streak=0;bestStreak=0;answeredCorrectly=0;
-    document.getElementById('totalQ').textContent=count;
-    document.getElementById('finalScreen').style.display='none';
-    document.getElementById('gameCard').style.display='';
-    document.getElementById('statusBar').style.display='';
-    document.getElementById('catSelector').style.display='';
-    updateStatus();loadQuestion();
-    showMascotSpeech("準備好未？開始啦！🎉");
-}
-
-function updateStatus(){
-    document.getElementById('currentQ').textContent=current+1;
-    document.getElementById('score').textContent=score;
-    document.getElementById('progressFill').style.width=(current/sentences.length*100)+'%';
-    const b=document.getElementById('streakBadge'),n=document.getElementById('streakNum');
-    if(streak>=2){b.classList.add('show');n.textContent=streak;}else b.classList.remove('show');
-}
-
-/* ===== Load Question ===== */
-function loadQuestion(){
-    const s=sentences[current];
-    shuffledWords=[...s.words].sort(()=>Math.random()-.5);
-    let att=0;
-    while(shuffledWords.join('')===s.words.join('')&&att<30){shuffledWords.sort(()=>Math.random()-.5);att++;}
-    slots=Array(s.words.length).fill(null);
-    usedWords=Array(shuffledWords.length).fill(false);
-
-    // Category tag
-    const ct=document.getElementById('catTag');
-    ct.dataset.c=s.cat;ct.textContent=s.catLabel;
-    // Difficulty tag
-    const dt=document.getElementById('diffTag');
-    dt.textContent=DIFF_LABELS[s.diff]||'簡單';
-    dt.className='diff-tag diff-'+(s.diff||'easy');
-
-    renderSlots();renderPool();updateStatus();
-}
-
-function renderSlots(){
-    const z=document.getElementById('dropZone');z.innerHTML='';
-    const allF=!slots.includes(null);
-    z.className='drop-zone'+(allF?' all-filled':'');
-    slots.forEach((w,i)=>{
-        const d=document.createElement('div');d.className='slot'+(w?' filled':'');
-        d.innerHTML=`<span class="slot-num">${i+1}</span><span>${w||''}</span>`;
-        if(w)d.onclick=()=>{speakWord(w);removeFromSlot(i);};
-        z.appendChild(d);
-    });
-}
-
-function renderPool(){
-    const p=document.getElementById('wordPool');p.innerHTML='';
-    shuffledWords.forEach((w,i)=>{
-        const d=document.createElement('div');
-        d.className=`word-tile color-${i%6}`+(usedWords[i]?' used':'');
-        d.textContent=w;d.style.animationDelay=(i*.08)+'s';
-        if(!usedWords[i])d.onclick=()=>{speakWord(w);placeWord(i);};
-        p.appendChild(d);
-    });
-}
-
-/* ===== Place / Remove ===== */
-function placeWord(wIdx){
-    const e=slots.indexOf(null);if(e===-1)return;
-    slots[e]=shuffledWords[wIdx];usedWords[wIdx]=true;
-    renderSlots();renderPool();
-}
-function removeFromSlot(sIdx){
-    const w=slots[sIdx];if(!w)return;
-    for(let i=0;i<shuffledWords.length;i++){if(shuffledWords[i]===w&&usedWords[i]){usedWords[i]=false;break;}}
-    slots[sIdx]=null;renderSlots();renderPool();
-}
-function resetCurrent(){
-    slots=Array(sentences[current].words.length).fill(null);
-    usedWords=Array(shuffledWords.length).fill(false);
-    renderSlots();renderPool();
-    document.getElementById('gameCard').classList.add('shake');
-    setTimeout(()=>document.getElementById('gameCard').classList.remove('shake'),500);
-}
-
-/* ===== Check ===== */
-function checkAnswer(){
-    if(slots.includes(null)){
-        document.getElementById('gameCard').classList.add('shake');
-        setTimeout(()=>document.getElementById('gameCard').classList.remove('shake'),500);
-        showMascotSpeech("要填晒所有格仔先得㗎！");return;
-    }
-    const correct=sentences[current].words;
-    const isCorrect=slots.join('')===correct.join('');
-    const slotEls=document.querySelectorAll('.slot');
-    slotEls.forEach((el,i)=>{setTimeout(()=>{el.classList.add(isCorrect?'correct-anim':'wrong-anim');},i*120);});
-    setTimeout(()=>{
-        if(isCorrect){streak++;if(streak>bestStreak)bestStreak=streak;let bonus=streak>=3?5:0;score+=10+bonus;answeredCorrectly++;updateStatus();showConfetti();
-            if(streak>=3)showCombo(`🔥 ${streak} 連對！+${10+bonus}分`);
-            speakCantonese(correct.join(''),.75);
-        }else{streak=0;updateStatus();setTimeout(()=>speakCantonese(correct.join(''),.75),400);}
-        showFeedback(isCorrect,correct);
-    },correct.length*120+300);
-}
-
-/* ===== Feedback ===== */
-function showFeedback(ok,cw){
-    const fb=document.getElementById('feedback'),box=document.getElementById('feedbackBox');
-    const isLast=current>=sentences.length-1;const ans=cw.join('');
-    const cMsgs=["太叻喇！🎉","答啱咗！勁呀！🌟","好犀利呀！👏","正確！你好醒！💪","答得啱晒！🥳"];
-    const wMsgs=["唔啱呀，冇關係！😊","下次一定得！加油～💪","差啲啫，繼續努力！👍","再試多次就識㗎！🤗"];
-    const msg=ok?cMsgs[Math.floor(Math.random()*cMsgs.length)]:wMsgs[Math.floor(Math.random()*wMsgs.length)];
-    box.className='feedback-box '+(ok?'correct':'wrong');
-    box.innerHTML=`
-        <div class="feedback-emoji">${ok?'🎉':'🤗'}</div>
-        <div class="feedback-text">${msg}</div>
-        <div class="feedback-sub">${ok?'你答得好好呀！':'正確嘅句子係：'}</div>
-        <div class="feedback-answer" style="${ok?'color:#43e97b;border-color:rgba(67,233,123,.25);background:rgba(67,233,123,.07);':''}">${ans}</div>
-        ${ok&&streak>=2?`<div class="score-popup">🔥 ${streak} 連對！</div>`:''}
-        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
-            <button class="speak-btn" onclick="speakCantonese('${ans}',.75)">🔊 再聽一次</button>
-            <button class="btn btn-next" onclick="nextQuestion()">${isLast?'🏆 睇成績':'👉 下一題'}</button>
-        </div>`;
-    fb.classList.add('show');
-}
-function closeFeedback(){document.getElementById('feedback').classList.remove('show');}
-function nextQuestion(){closeFeedback();current++;if(current>=sentences.length)showFinal();else loadQuestion();}
-
-/* ===== Hint ===== */
-document.getElementById('hintBtn').onclick=function(){
-    const s=sentences[current];const ov=document.getElementById('hintOverlay');
-    document.getElementById('hintBubble').innerHTML=`
-        <div class="hint-emoji">💡</div>
-        <div style="font-size:.85rem;color:rgba(255,255,255,.35);margin-bottom:6px;">${s.catLabel}</div>
-        <div class="hint-text">${s.hint}</div>
-        <button class="btn btn-check" onclick="closeHint()">知道啦！</button>`;
-    ov.classList.add('show');speakCantonese(s.hint,.85);
+/**
+ * 遊戲邏輯與狀態
+ */
+let gameState = {
+    category: 'all',
+    questions: [],
+    currentIdx: 0,
+    score: 0,
+    streak: 0,
+    bestStreak: 0,
+    slots: [],
+    usedIndices: [],
+    shuffledWords: []
 };
-function closeHint(){document.getElementById('hintOverlay').classList.remove('show');}
 
-/* ===== Final ===== */
-function showFinal(){
-    document.getElementById('gameCard').style.display='none';
-    document.getElementById('statusBar').style.display='none';
-    document.getElementById('catSelector').style.display='none';
-    const tot=sentences.length;const pct=answeredCorrectly/tot;
-    let stars=pct>=.8?3:pct>=.5?2:1;
-    let msg,emoji;
-    if(pct>=.9){msg='你係真正嘅句子小達人！超級叻！';emoji='🏆';}
-    else if(pct>=.7){msg='好叻呀！做得好好！繼續加油！';emoji='🌟';}
-    else if(pct>=.5){msg='做得唔錯！再練多啲會更加好！';emoji='💪';}
-    else{msg='冇關係，再試多次一定得㗎！';emoji='🌱';}
-    const starH=Array.from({length:3},(_,i)=>`<span class="star">${i<stars?'⭐':'☆'}</span>`).join('');
-    const fs=document.getElementById('finalScreen');fs.style.display='';
-    fs.innerHTML=`
-        <div class="trophy">${emoji}</div>
-        <h2>遊戲完成！</h2>
-        <div class="star-row">${starH}</div>
-        <div class="stats-grid">
-            <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-val">${score}</div><div class="stat-label">總得分</div></div>
-            <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-val">${answeredCorrectly}/${tot}</div><div class="stat-label">答啱題數</div></div>
-            <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-val">${bestStreak}</div><div class="stat-label">最高連對</div></div>
-            <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-val">${Math.round(pct*100)}%</div><div class="stat-label">正確率</div></div>
-        </div>
-        <div class="final-score">${msg}</div>
-        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-            <button class="btn btn-restart" onclick="init()">🔄 再玩一次</button>
-        </div>`;
-    document.getElementById('progressFill').style.width='100%';
-    showConfetti();setTimeout(showConfetti,500);setTimeout(showConfetti,1000);
-    setTimeout(()=>speakCantonese(msg,.8),600);
+// 語音初始化
+let synth = window.speechSynthesis;
+let cantoVoice = null;
+
+function loadVoices() {
+    let voices = synth.getVoices();
+    cantoVoice = voices.find(v => v.lang === 'zh-HK' || v.lang.includes('HK')) || 
+                 voices.find(v => v.lang.includes('zh')) || null;
+}
+if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = loadVoices;
+loadVoices();
+
+function speak(text, rate = 0.85) {
+    if (!synth) return;
+    synth.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    if (cantoVoice) utter.voice = cantoVoice;
+    utter.lang = 'zh-HK';
+    utter.rate = rate;
+    utter.pitch = 1;
+    synth.speak(utter);
 }
 
-/* ===== Combo ===== */
-function showCombo(t){const e=document.createElement('div');e.className='combo-float';e.textContent=t;document.body.appendChild(e);setTimeout(()=>e.remove(),1400);}
+// 核心初始化
+function initGame(cat = 'all') {
+    gameState.category = cat;
+    let pool = cat === 'all' ? [...DATA] : DATA.filter(d => d.cat === cat);
+    // 隨機選10題
+    gameState.questions = pool.sort(() => Math.random() - 0.5).slice(0, 10);
+    gameState.currentIdx = 0;
+    gameState.score = 0;
+    gameState.streak = 0;
+    
+    document.getElementById('finalView').style.display = 'none';
+    document.getElementById('gameCard').style.display = 'block';
+    document.getElementById('catSelector').style.display = 'flex';
+    document.getElementById('totalIdx').innerText = gameState.questions.length;
 
-/* ===== Mascot ===== */
-function showMascotSpeech(t){const s=document.getElementById('mascotSpeech');s.textContent=t;s.classList.add('show');clearTimeout(s._t);s._t=setTimeout(()=>s.classList.remove('show'),3500);}
-function mascotTap(){const m=MASCOT_MSGS[Math.floor(Math.random()*MASCOT_MSGS.length)];showMascotSpeech(m);speakCantonese(m.replace(/[💪😊👏💡🌟🎉🥳🤗]/g,''),.9);}
+    loadQuestion();
+}
 
-/* ===== Confetti ===== */
-function showConfetti(){const c=document.getElementById('confettiContainer');const cols=['#f7971e','#ffd200','#43e97b','#667eea','#f5576c','#38f9d7','#f093fb','#4facfe','#fff'];for(let i=0;i<55;i++){const p=document.createElement('div');p.className='confetti-piece';p.style.left=Math.random()*100+'vw';p.style.background=cols[Math.floor(Math.random()*cols.length)];p.style.animationDuration=(1.5+Math.random()*2.5)+'s';p.style.animationDelay=(Math.random()*.8)+'s';p.style.width=(6+Math.random()*12)+'px';p.style.height=(6+Math.random()*12)+'px';p.style.borderRadius=Math.random()>.5?'50%':'2px';p.style.opacity=.8+Math.random()*.2;c.appendChild(p);setTimeout(()=>p.remove(),4500);}}
+function loadQuestion() {
+    const q = gameState.questions[gameState.currentIdx];
+    gameState.shuffledWords = [...q.words].sort(() => Math.random() - 0.5);
+    gameState.slots = Array(q.words.length).fill(null);
+    gameState.usedIndices = [];
 
-/* ===== BG Effects ===== */
-function createStars(){const l=document.getElementById('starsLayer');for(let i=0;i<55;i++){const s=document.createElement('div');s.className='tiny-star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=(Math.random()*4)+'s';s.style.animationDuration=(1.5+Math.random()*2)+'s';const sz=(2+Math.random()*3)+'px';s.style.width=sz;s.style.height=sz;l.appendChild(s);}}
-function createBubbles(){const emojis=['🌟','🎈','🎵','🦋','🌸','🍎','✏️','📖','🐻','🌈','⭐','🎂','🐱','🐶','🐰','🌷','❄️','🎠','🐘','🎨'];const bg=document.querySelector('.bg-gradient');setInterval(()=>{const e=document.createElement('div');e.className='emoji-bubble';e.textContent=emojis[Math.floor(Math.random()*emojis.length)];e.style.left=Math.random()*100+'%';e.style.fontSize=(1.5+Math.random()*2)+'rem';e.style.animationDuration=(12+Math.random()*15)+'s';bg.appendChild(e);setTimeout(()=>e.remove(),27000);},3200);}
+    document.getElementById('curIdx').innerText = gameState.currentIdx + 1;
+    document.getElementById('score').innerText = gameState.score;
+    document.getElementById('qCat').innerText = q.label;
+    document.getElementById('qDiff').innerText = q.diff;
+    document.getElementById('progressBar').style.width = `${(gameState.currentIdx / gameState.questions.length) * 100}%`;
 
-/* ===== START ===== */
-createStars();createBubbles();init();
+    renderGame();
+}
+
+function renderGame() {
+    const dropZone = document.getElementById('dropZone');
+    dropZone.innerHTML = '';
+    gameState.slots.forEach((val, i) => {
+        const div = document.createElement('div');
+        div.className = `slot ${val ? 'filled' : ''}`;
+        div.innerHTML = `<span class="slot-num">${i+1}</span>${val || ''}`;
+        div.onclick = () => removeWord(i);
+        dropZone.appendChild(div);
+    });
+
+    const pool = document.getElementById('wordPool');
+    pool.innerHTML = '';
+    gameState.shuffledWords.forEach((word, i) => {
+        const div = document.createElement('div');
+        const isUsed = gameState.usedIndices.includes(i);
+        div.className = `word-tile ${isUsed ? 'used' : ''}`;
+        // 賦予顏色
+        const colors = ['#f7971e', '#43e97b', '#667eea', '#f5576c', '#4facfe', '#ffd200'];
+        div.style.background = isUsed ? 'rgba(255,255,255,0.05)' : colors[i % colors.length];
+        div.innerText = word;
+        div.onclick = () => isUsed ? null : fillWord(i);
+        pool.appendChild(div);
+    });
+}
+
+function fillWord(wordIdx) {
+    const emptySlot = gameState.slots.indexOf(null);
+    if (emptySlot !== -1) {
+        gameState.slots[emptySlot] = gameState.shuffledWords[wordIdx];
+        gameState.usedIndices.push(wordIdx);
+        speak(gameState.shuffledWords[wordIdx], 1.1);
+        renderGame();
+    }
+}
+
+function removeWord(slotIdx) {
+    const word = gameState.slots[slotIdx];
+    if (word) {
+        const poolIdx = gameState.shuffledWords.indexOf(word);
+        // 如果池中有重複詞，要找一個被標記為used的
+        const usedIdx = gameState.usedIndices.find(idx => gameState.shuffledWords[idx] === word);
+        gameState.usedIndices = gameState.usedIndices.filter(idx => idx !== usedIdx);
+        gameState.slots[slotIdx] = null;
+        renderGame();
+    }
+}
+
+function resetSlots() {
+    gameState.slots = Array(gameState.slots.length).fill(null);
+    gameState.usedIndices = [];
+    renderGame();
+    document.getElementById('gameCard').classList.add('shake');
+    setTimeout(() => document.getElementById('gameCard').classList.remove('shake'), 500);
+}
+
+function checkAnswer() {
+    if (gameState.slots.includes(null)) {
+        talkMascot("要把空格填滿哦！");
+        document.getElementById('gameCard').classList.add('shake');
+        setTimeout(() => document.getElementById('gameCard').classList.remove('shake'), 500);
+        return;
+    }
+
+    const q = gameState.questions[gameState.currentIdx];
+    const userSentence = gameState.slots.join('');
+    const correctSentence = q.words.join('');
+    const isCorrect = userSentence === correctSentence;
+
+    const overlay = document.getElementById('modalOverlay');
+    const modal = document.getElementById('feedbackModal');
+    const mEmoji = document.getElementById('mEmoji');
+    const mTitle = document.getElementById('mTitle');
+    const mAns = document.getElementById('mAns');
+    const mBonus = document.getElementById('mBonus');
+
+    if (isCorrect) {
+        gameState.streak++;
+        if (gameState.streak > gameState.bestStreak) gameState.bestStreak = gameState.streak;
+        
+        let bonus = gameState.streak >= 3 ? 5 : 0;
+        let points = 10 + bonus;
+        gameState.score += points;
+
+        mEmoji.innerText = "🎉";
+        mTitle.innerText = "太棒了，答對了！";
+        mTitle.style.color = "var(--green)";
+        mAns.innerText = correctSentence;
+        mBonus.innerText = bonus > 0 ? `🔥 連續對了 ${gameState.streak} 題！額外 +${bonus} 分` : `獲得 ${points} 分`;
+        
+        speak(correctSentence);
+    } else {
+        gameState.streak = 0;
+        mEmoji.innerText = "💡";
+        mTitle.innerText = "再接再厲！";
+        mTitle.style.color = "var(--pink)";
+        mAns.innerText = correctSentence;
+        mBonus.innerText = "別灰心，下次一定能答對！";
+        speak(`正確句子是：${correctSentence}`);
+    }
+
+    const badge = document.getElementById('streakBadge');
+    if (gameState.streak >= 2) {
+        badge.classList.add('show');
+        document.getElementById('streakCount').innerText = gameState.streak;
+    } else {
+        badge.classList.remove('show');
+    }
+
+    overlay.classList.add('show');
+
+    document.getElementById('mNextBtn').onclick = () => {
+        overlay.classList.remove('show');
+        nextQuestion();
+    };
+    document.getElementById('mSpeakBtn').onclick = () => speak(correctSentence);
+}
+
+function nextQuestion() {
+    gameState.currentIdx++;
+    if (gameState.currentIdx < gameState.questions.length) {
+        loadQuestion();
+    } else {
+        showFinal();
+    }
+}
+
+function showHint() {
+    const q = gameState.questions[gameState.currentIdx];
+    talkMascot(q.hint);
+    speak(q.hint);
+}
+
+function showFinal() {
+    document.getElementById('gameCard').style.display = 'none';
+    document.getElementById('catSelector').style.display = 'none';
+    const finalView = document.getElementById('finalView');
+    finalView.style.display = 'block';
+    
+    document.getElementById('finalStats').innerHTML = `
+        <div style="font-weight:900; color:var(--yellow); font-size:2rem;">${gameState.score} 分</div>
+        最高連續對題數：${gameState.bestStreak}<br>
+        正確率：${(gameState.score / (gameState.questions.length * 10) * 100).toFixed(0)}%
+    `;
+    speak("恭喜你完成挑戰！你真厲害！");
+}
+
+function talkMascot(msg) {
+    const speech = document.getElementById('mascotSpeech');
+    if (!msg) {
+        const msgs = ["你好啊！我是句子小達人！", "今天想練習哪一個分類？", "加油，你一定可以做到的！", "按提示可以幫到你哦！"];
+        msg = msgs[Math.floor(Math.random() * msgs.length)];
+    }
+    speech.innerText = msg;
+    speech.classList.add('show');
+    setTimeout(() => speech.classList.remove('show'), 4000);
+}
+
+// 星星特效
+function createStars() {
+    const bg = document.getElementById('bgLayer');
+    for (let i = 0; i < 60; i++) {
+        const star = document.createElement('div');
+        star.className = 'tiny-star';
+        star.style.top = `${Math.random() * 100}%`;
+        star.style.left = `${Math.random() * 100}%`;
+        star.style.animationDelay = `${Math.random() * 3}s`;
+        bg.appendChild(star);
+    }
+}
+
+// 分類切換
+document.querySelectorAll('.cat-pill').forEach(pill => {
+    pill.onclick = () => {
+        document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        initGame(pill.dataset.cat);
+    };
+});
+
+window.onload = () => {
+    createStars();
+    initGame();
+};
 </script>
 </body>
 </html>
